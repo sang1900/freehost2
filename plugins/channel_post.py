@@ -22,7 +22,10 @@ async def channel_post(client: Client, message: Message):
     converted_id = post_message.message_id * abs(client.db_channel.id)
     string = f"get-{converted_id}"
     base64_string = await encode(string)
-    link = requests.get(f"https://link1s.com/api?api=9e9c26d7a2a2759289d9f95c84931a0471da7243&url=https://toolpremium.blogspot.com/p/lay-url-luu-tru-telegram.html?link=https://t.me/{client.username}?start={base64_string}").json()['shortenedUrl']
+    if filters.user(ADMINS):
+      link = requests.get(f"https://link1s.com/api?api=9e9c26d7a2a2759289d9f95c84931a0471da7243&url=https://toolpremium.blogspot.com/p/lay-url-luu-tru-telegram.html?link=https://t.me/{client.username}?start={base64_string}").json()['shortenedUrl']
+    else: 
+      link=f"https://t.me/{client.username}?start={base64_string}"
 
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🎬 Hướng dẫn lấy URL lưu trữ", url=f'https://t.me/daokhieudam'),InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={link}')]])
     await reply_text.edit(f"<b>✅ LƯU TRỮ THÀNH CÔNG \n\n🔗 Your URL : {link}</b>\n(Vì đây là bản FREE nên cần mở link rút gọn để lấy link lưu trữ, liên hệ <a href='https://fb.com/sang1900'>Admin</a> để xoá link rút gọn.)", reply_markup=reply_markup, disable_web_page_preview = True)
